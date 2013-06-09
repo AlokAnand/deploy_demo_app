@@ -1,7 +1,7 @@
 require 'rvm/capistrano'
 set :rvm_type, :user
 set :rvm_ruby_string, 'ruby-2.0.0-p195@deploy_demo_app'
-set :application, "192.168.9.247"
+set :application, "127.0.0.1"
 set :repository,  "git://github.com/AlokAnand/deploy_demo_app.git"
 set :scm, :git
 set :scm_username, "AlokAnand"
@@ -14,10 +14,10 @@ set :deploy_to, "/var/www/192.168.9.247"
 set :deploy_via, :remote_cache
 set :user, "alok"
 set :use_sudo, false
-role :web, "192.168.9.247"                          # Your HTTP server, Apache/etc
-role :app, "192.168.9.247"                          # This may be the same as your `Web` server
-role :db,  "192.168.9.247", :primary => true        # This is where Rails migrations will run
-role :db,  "192.168.9.247"
+role :web, "127.0.0.1"                          # Your HTTP server, Apache/etc
+role :app, "127.0.0.1"                          # This may be the same as your `Web` server
+role :db,  "127.0.0.1", :primary => true        # This is where Rails migrations will run
+role :db,  "127.0.0.1"
 
 # if you want to clean up old releases on each deploy uncomment this:
 after "deploy:restart", "deploy:cleanup"
