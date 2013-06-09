@@ -4,7 +4,7 @@ set :rvm_ruby_string, 'ruby-2.0.0-p195@deploy_demo_app'
 set :application, "192.168.9.247"
 set :repository,  "git://github.com/AlokAnand/deploy_demo_app.git"
 set :scm, :git
-set :scm_username, "Alok Anand"
+set :scm_username, "AlokAnand"
 set :branch, "master"
 set :git_enable_submodules, 1
 set :rails_env, "production"
