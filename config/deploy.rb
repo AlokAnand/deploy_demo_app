@@ -19,8 +19,9 @@ role :app, "192.168.0.106"                          # This may be the same as yo
 role :db,  "192.168.0.106", :primary => true        # This is where Rails migrations will run
 
 # if you want to clean up old releases on each deploy uncomment this:
-after 'deploy:setup', 'deploy:upload_settings'
-after 'deploy:update_code', 'deploy:symlink_yml'
+before "deploy:assets:precompile" do
+  run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
+end
 after "deploy:restart", "deploy:cleanup" 
 
 namespace :deploy do
@@ -30,15 +31,6 @@ namespace :deploy do
  
   task :stop, :roles => :app do
     # Do nothing.
-  end
-
-  task :upload_settings, :roles => :app do
-    run "mkdir -p #{shared_path}/config/"
-    top.upload "config/database.yml", "#{shared_path}/config/database.yml", :via => :scp
-  end
-
-  task :symlink_yml, :roles => :app do
-    run "ln -sf #{shared_path}/config/database.yml #{release_path}/config/database.yml"
   end
 
   desc "Restart Application"
