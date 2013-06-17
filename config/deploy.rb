@@ -18,6 +18,9 @@ role :web, "192.168.0.106"                          # Your HTTP server, Apache/e
 role :app, "192.168.0.106"                          # This may be the same as your `Web` server
 role :db,  "192.168.0.106", :primary => true        # This is where Rails migrations will run
 
+# if you want to clean up old releases on each deploy uncomment this:
+after "deploy:restart", "deploy:cleanup" 
+
 namespace :deploy do
   task :start, :roles => :app do
     run "touch #{current_path}/tmp/restart.txt"
@@ -25,19 +28,6 @@ namespace :deploy do
  
   task :stop, :roles => :app do
     # Do nothing.
-  end
-
-  desc "Symlink shared config files"
-  task :symlink_config_files do
-    run "#{ sudo } ln -s #{ deploy_to }/shared/config/database.yml #{ current_path }/config/database.yml"
-  end
-
-  desc "Precompile assets after deploy"
-  task :precompile_assets do
-    run <<-CMD
-      cd #{ current_path } &&
-      #{ sudo } bundle exec rake assets:precompile RAILS_ENV=#{ rails_env }
-    CMD
   end
 
   desc "Restart Application"
@@ -52,6 +42,3 @@ namespace :deploy do
   end
 
 end
-
-# if you want to clean up old releases on each deploy uncomment this:
-after "deploy:symlink_config_files", "deploy:restart", "deploy:cleanup" 
