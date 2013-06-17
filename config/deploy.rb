@@ -24,7 +24,7 @@ namespace :deploy do
 
   desc "Symlink shared config files"
   task :symlink_config_files do
-    run "#{ sudo } ln -s #{ deploy_to }/shared/config/database.yml #{ current_path }/config/database.yml"
+    run "#{ sudo } ln -s #{ deploy_to }/shared/config/database.yml #{ release_path }/config/database.yml"
   end
 
   desc "Precompile assets after deploy"
