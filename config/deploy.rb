@@ -19,7 +19,13 @@ role :app, "192.168.0.106"                          # This may be the same as yo
 role :db,  "192.168.0.106", :primary => true        # This is where Rails migrations will run
 
 namespace :deploy do
-  task :start do ; end
+  task :start do 
+        put "222222222222"
+     put "#{ current_path }"
+     put "2222"
+     put "#{ release_path }"
+    put "222222222222"
+  end
   task :stop do ; end
 
   desc "Symlink shared config files"
@@ -29,11 +35,6 @@ namespace :deploy do
 
   desc "Precompile assets after deploy"
   task :precompile_assets do
-    put "222222222222"
-     put "#{ current_path }"
-     put "2222"
-     put "#{ release_path }"
-    put "222222222222"
     run <<-CMD
       cd #{ current_path } &&
       #{ sudo } bundle exec rake assets:precompile RAILS_ENV=#{ rails_env }
