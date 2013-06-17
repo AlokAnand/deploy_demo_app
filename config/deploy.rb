@@ -40,11 +40,13 @@ namespace :deploy do
     run "#{ try_sudo } touch #{ File.join(current_path, 'tmp', 'restart.txt') }"
   end
 
+=begin
   after 'deploy:update_code' do
     run "cd #{release_path}; RAILS_ENV=production rake assets:precompile"
     run "cd #{release_path}; RAILS_ENV=production rake db:create"
     run "cd #{release_path}; RAILS_ENV=production rake db:migrate"
   end
+=end
 
 end
 
