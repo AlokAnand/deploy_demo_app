@@ -19,7 +19,7 @@ role :app, "192.168.0.106"                          # This may be the same as yo
 role :db,  "192.168.0.106", :primary => true        # This is where Rails migrations will run
 
 # if you want to clean up old releases on each deploy uncomment this:
-after "deploy:restart", "deploy:cleanup" 
+after "deploy:symlink_config_files", "deploy:restart", "deploy:cleanup" 
 
 namespace :deploy do
   task :start, :roles => :app do
@@ -28,6 +28,11 @@ namespace :deploy do
  
   task :stop, :roles => :app do
     # Do nothing.
+  end
+
+  desc "Symlink shared config files"
+  task :symlink_config_files do
+    run "#{ sudo } ln -s #{ deploy_to }/shared/config/database.yml #{ current_path }/config/database.yml"
   end
 
   desc "Restart Application"
