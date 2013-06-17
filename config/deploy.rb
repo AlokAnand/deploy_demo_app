@@ -29,6 +29,11 @@ namespace :deploy do
 
   desc "Precompile assets after deploy"
   task :precompile_assets do
+    put "222222222222"
+     put "#{ current_path }"
+     put "2222"
+     put "#{ release_path }"
+    put "222222222222"
     run <<-CMD
       cd #{ current_path } &&
       #{ sudo } bundle exec rake assets:precompile RAILS_ENV=#{ rails_env }
